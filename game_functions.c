@@ -122,9 +122,11 @@ void imprimirJogos(jogador player){
 			imprimirDeque(&player.jogo[i]);
 			printf("]\n");
 		}
-	if(!pilha_vazia(&player.cartasInteresse))
-		printf("Carta de interesse: %c%c \n", player.cartasInteresse.ptrtopo->info.display,
-									   		  player.cartasInteresse.ptrtopo->info.naipe);
+	if(!pilha_vazia(&player.cartasInteresse)){
+		printf("Carta de interesse: ");
+		imprimir_carta(player.cartasInteresse.ptrtopo->info);
+		printf("\n");
+	}
 }
 
 int cartaIgual(deque d, carta carta){
@@ -180,7 +182,8 @@ int realizarAcao(jogador *player, carta carta, int escolha){
 		do{
 			do{
 				printf("(Digite -1 para voltar)\n");
-				printf("A qual jogo quer adicionar a carta %c%c: ", carta.display, carta.naipe);
+				printf("A qual jogo quer adicionar a carta: ");
+				imprimir_carta(carta);
 				scanf("%d", &jogo);
 			}while(jogo < -1 || jogo > 3);
 			
@@ -215,15 +218,20 @@ int realizarAcao(jogador *player, carta carta, int escolha){
 		}while(!inserido);
 	}
 	if(escolha == 2){
-		printf("Empilhando a carta %c%c nas cartas de interesse\n", carta.display, carta.naipe);
+		printf("Empilhando a carta ");
+		imprimir_carta(carta);
+		printf("nas cartas de interesse\n");
 		push(&player->cartasInteresse, carta);
 	}
 	if(escolha == 3){
-		printf("Enfileirando a carta %c%c no baralho.. \n", carta.display, carta.naipe);
+		printf("Enfileirando a carta ");
+		imprimir_carta(carta);
+		printf("no baralho.. \n");
 		enfileirar(&player->baralho, carta);
 	}
 	if(escolha == 4){
 		imprimirJogos(*player);
+		system("pause");
 		return 0;
 	}
 	system("pause");
@@ -246,9 +254,9 @@ jogador *jogar(jogador *player1, jogador *player2){
 			printf("Vez de %s \n", player->nome);
 			printf("Pontuacao: %d\n", player->pontuacao);
 			if (!pilha_vazia(&player->cartasInteresse)){
-				printf("Carta de interesse: %c%c\n", player->cartasInteresse.ptrtopo->info.display,
-												 player->cartasInteresse.ptrtopo->info.naipe);
-				printf("Escolha: \n");
+				printf("Carta de interesse: ");
+				imprimir_carta(player->cartasInteresse.ptrtopo->info);
+				printf("\nEscolha: \n");
 				printf("1 - Comprar do monte \n");
 				printf("2 - Retirar das cartas de interesse \n");
 				scanf("%d", &retirada);
@@ -265,7 +273,9 @@ jogador *jogar(jogador *player1, jogador *player2){
 			system("cls || clear");
 			printf("Vez de %s \n", player->nome);
 			printf("Pontuacao: %d\n", player->pontuacao);
-			printf("Carta retirada: %c%c \n", carta.display, carta.naipe);
+			printf("Carta retirada: ");
+			imprimir_carta(carta);
+			printf("\n");
 			printf("1 - Adicionar a um jogo \n");
 			printf("2 - Adicionar como carta de interesse \n");
 			printf("3 - Descartar \n");

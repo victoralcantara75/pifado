@@ -10,6 +10,12 @@ typedef struct sCard{
 	int valor;
 }carta;
 
+void imprimir_carta(carta carta){
+    if(carta.display == '0')
+        printf("10%c ",carta.naipe);
+    else
+        printf("%c%c ", carta.display, carta.naipe);
+}
 
 // ================================== FILA (Baralho) ====================================
 typedef struct sFila{
@@ -62,9 +68,8 @@ int enfileirar(fila *fila, carta n){
 	 	return 0;
 	 
 	 while(!fila_vazia(fila)){
-		 printf("%c%c ", fila->vet[(fila->inicio+1) % TAM_CARTAS].display,
-		 	 	 	 	 fila->vet[(fila->inicio+1) % TAM_CARTAS].naipe);
-		 desenfileirar(fila);
+        imprimir_carta(fila->vet[(fila->inicio+1) % TAM_CARTAS]);
+		desenfileirar(fila);
 	 }
 	 return 1;
  }
@@ -72,8 +77,8 @@ int enfileirar(fila *fila, carta n){
  void imprimirFilaNaoClassica(fila *fila){
 	 int i= (fila->inicio+1) % TAM_CARTAS;
 	 while (i!= (fila->fim+1) % TAM_CARTAS){
-		 printf("%c%c ", fila->vet[i].display, fila->vet[i].naipe);
-		 i = (i+1)%TAM_CARTAS;
+        imprimir_carta(fila->vet[i]);
+		i = (i+1)%TAM_CARTAS;
 	 }
  }
 
@@ -158,7 +163,7 @@ void imprimirDeque(deque *deque){
 
     while (aux != deque->fim)
     {
-        printf("%c%c ", deque->info[aux].display, deque->info[aux].naipe);
+        imprimir_carta(deque->info[aux]);
         aux = (aux+1)%TAM_ESPACO;
     }
 }
@@ -203,7 +208,7 @@ int push(pilha *p, carta elem){
 carta pop(pilha *p){
     if(pilha_vazia(p))
     {
-        printf("nao ha elementos para desempilhar\n");
+        printf("Nao ha elementos para desempilhar\n");
         exit(1);
     }
     
@@ -218,7 +223,7 @@ carta pop(pilha *p){
 
 void imprimir_pilha(pilha *p){
     while(!pilha_vazia(p)){
-        printf("%c%c ", p->ptrtopo->info.display, p->ptrtopo->info.naipe);
+        imprimir_carta(p->ptrtopo->info);
         pop(p);
     }
     printf("\n");
@@ -228,7 +233,7 @@ void imprimir_pilha_nao_classica(pilha *p){
 
     celula *aux = p->ptrtopo;
     while(aux != NULL){
-        printf("%c%c ", aux->info.display, aux->info.naipe);
+        imprimir_carta(p->ptrtopo->info);
         aux = aux->prox;
     }
     printf("\n");

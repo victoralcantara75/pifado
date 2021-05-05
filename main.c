@@ -4,7 +4,7 @@
 #include "game_functions.c"
 
 int main(){
-	
+
 	carta cartas[52];
 	pegar_cartas(cartas);
 	int seeds[2];
@@ -13,12 +13,16 @@ int main(){
 	jogador player1, player2;
 
 	player1.numero = 1;
-	strcpy(player1.nome, "Player 1");
+	printf("Digite o nome do primeiro jogador: ");
+	fflush(stdin);
+	gets(player1.nome);
 	player1.turno = 1;
 	player1.pontuacao = 0;
 
 	player2.numero = 2;
-	strcpy(player2.nome, "Player 2");
+	printf("Digite o nome do segundo jogador: ");
+	fflush(stdin);
+	gets(player2.nome);
 	player2.turno = 0;
 	player2.pontuacao = 0;
 	
@@ -36,10 +40,6 @@ int main(){
 
 	embaralhar(&player1.baralho, cartas, seeds[0]);
 	embaralhar(&player2.baralho, cartas, seeds[1]);
-
-	// imprimirFilaNaoClassica(&player1.baralho);
-	// printf("\n");
-	// imprimirFilaNaoClassica(&player2.baralho);
 
 	jogador *ganhador = jogar(&player1, &player2);
 
